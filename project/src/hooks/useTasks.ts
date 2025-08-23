@@ -210,126 +210,28 @@
 
 // success
 
-import { useState, useEffect } from "react";
-import { Task } from "../types";
-
-export const useTasks = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  // Fetch tasks on mount
-  useEffect(() => {
-    fetch("http://localhost:5000/tasks") // make sure port matches backend
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) setTasks(data.tasks);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch tasks:", err);
-        setLoading(false);
-      });
-  }, []);
-
-  // Add a new task
-  const addTask = async (taskData: Omit<Task, "_id" | "created_at" | "updated_at">) => {
-    try {
-      const res = await fetch("http://localhost:5000/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(taskData),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setTasks(prev => [...prev, data.task]);
-      } else {
-        console.error("Failed to add task:", data.message);
-      }
-    } catch (err) {
-      console.error("Error adding task:", err);
-    }
-  };
-
-  // Update task
-  const updateTask = async (taskId: string, updates: Partial<Task>) => {
-    try {
-      const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updates),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setTasks(prev => prev.map(t => (t._id === taskId ? data.task : t)));
-      } else {
-        console.error("Failed to update task:", data.message);
-      }
-    } catch (err) {
-      console.error("Error updating task:", err);
-    }
-  };
-
-  // Delete task
-  const deleteTask = async (taskId: string) => {
-    try {
-      const res = await fetch(`http://localhost:5000/tasks/${taskId}`, { method: "DELETE" });
-      const data = await res.json();
-      if (data.success) {
-        setTasks(prev => prev.filter(t => t._id !== taskId));
-      } else {
-        console.error("Failed to delete task:", data.message);
-      }
-    } catch (err) {
-      console.error("Error deleting task:", err);
-    }
-  };
-
-  return { tasks, loading, addTask, updateTask, deleteTask };
-};
-
-
-
-
 // import { useState, useEffect } from "react";
-// import { Task, User } from "../types";
+// import { Task } from "../types";
 
-// export const useTasks = (currentUser: User | null) => {
+// export const useTasks = () => {
 //   const [tasks, setTasks] = useState<Task[]>([]);
 //   const [loading, setLoading] = useState(true);
 
+//   // Fetch tasks on mount
 //   useEffect(() => {
-//     if (currentUser) {
-//       fetchTasks();
-//     }
-//   }, [currentUser]);
+//     fetch("http://localhost:5000/tasks") // make sure port matches backend
+//       .then(res => res.json())
+//       .then(data => {
+//         if (data.success) setTasks(data.tasks);
+//         setLoading(false);
+//       })
+//       .catch(err => {
+//         console.error("Failed to fetch tasks:", err);
+//         setLoading(false);
+//       });
+//   }, []);
 
-//   // ✅ Fetch tasks from backend
-//   const fetchTasks = async () => {
-//     if (!currentUser) return;
-
-//     try {
-//       setLoading(true);
-//       const res = await fetch("http://localhost:5000/tasks"); // adjust backend port if needed
-//       const data = await res.json();
-
-//       if (data.success) {
-//         let allTasks = data.tasks;
-
-//         // ✅ Filtering logic
-//         if (currentUser.role === "CEO" || currentUser.role === "Director") {
-//           setTasks(allTasks);
-//         } else {
-//           setTasks(allTasks.filter((t: Task) => t.assigned_to === currentUser.id));
-//         }
-//       }
-//     } catch (err) {
-//       console.error("Failed to fetch tasks:", err);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   // ✅ Add task
+//   // Add a new task
 //   const addTask = async (taskData: Omit<Task, "_id" | "created_at" | "updated_at">) => {
 //     try {
 //       const res = await fetch("http://localhost:5000/tasks", {
@@ -348,7 +250,7 @@ export const useTasks = () => {
 //     }
 //   };
 
-//   // ✅ Update task
+//   // Update task
 //   const updateTask = async (taskId: string, updates: Partial<Task>) => {
 //     try {
 //       const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
@@ -367,7 +269,7 @@ export const useTasks = () => {
 //     }
 //   };
 
-//   // ✅ Delete task
+//   // Delete task
 //   const deleteTask = async (taskId: string) => {
 //     try {
 //       const res = await fetch(`http://localhost:5000/tasks/${taskId}`, { method: "DELETE" });
@@ -382,5 +284,103 @@ export const useTasks = () => {
 //     }
 //   };
 
-//   return { tasks, loading, addTask, updateTask, deleteTask, refetch: fetchTasks };
+//   return { tasks, loading, addTask, updateTask, deleteTask };
 // };
+
+
+
+
+import { useState, useEffect } from "react";
+import { Task, User } from "../types";
+
+export const useTasks = (currentUser: User | null) => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchTasks();
+    }
+  }, [currentUser]);
+
+  // ✅ Fetch tasks from backend
+  const fetchTasks = async () => {
+    if (!currentUser) return;
+
+    try {
+      setLoading(true);
+      const res = await fetch("http://localhost:5000/tasks"); // adjust backend port if needed
+      const data = await res.json();
+
+      if (data.success) {
+        let allTasks = data.tasks;
+
+        // ✅ Filtering logic
+        if (currentUser.role === "CEO" || currentUser.role === "Director") {
+          setTasks(allTasks);
+        } else {
+          setTasks(allTasks.filter((t: Task) => t.assigned_to === currentUser.id));
+        }
+      }
+    } catch (err) {
+      console.error("Failed to fetch tasks:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ Add task
+  const addTask = async (taskData: Omit<Task, "_id" | "created_at" | "updated_at">) => {
+    try {
+      const res = await fetch("http://localhost:5000/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(taskData),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setTasks(prev => [...prev, data.task]);
+      } else {
+        console.error("Failed to add task:", data.message);
+      }
+    } catch (err) {
+      console.error("Error adding task:", err);
+    }
+  };
+
+  // ✅ Update task
+  const updateTask = async (taskId: string, updates: Partial<Task>) => {
+    try {
+      const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updates),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setTasks(prev => prev.map(t => (t._id === taskId ? data.task : t)));
+      } else {
+        console.error("Failed to update task:", data.message);
+      }
+    } catch (err) {
+      console.error("Error updating task:", err);
+    }
+  };
+
+  // ✅ Delete task
+  const deleteTask = async (taskId: string) => {
+    try {
+      const res = await fetch(`http://localhost:5000/tasks/${taskId}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        setTasks(prev => prev.filter(t => t._id !== taskId));
+      } else {
+        console.error("Failed to delete task:", data.message);
+      }
+    } catch (err) {
+      console.error("Error deleting task:", err);
+    }
+  };
+
+  return { tasks, loading, addTask, updateTask, deleteTask, refetch: fetchTasks };
+};

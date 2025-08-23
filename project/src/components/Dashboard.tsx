@@ -109,7 +109,7 @@ interface DashboardProps {
 
 export const Dashboard: React.FC<DashboardProps> = ({ currentUser, addNotification }) => {
   // ✅ no args needed now
-  const { tasks, loading: tasksLoading, addTask, updateTask, deleteTask } = useTasks();
+  const { tasks, loading: tasksLoading, addTask, updateTask, deleteTask } = useTasks(currentUser);
   const { employees, loading: employeesLoading } = useEmployees();
 
   if (tasksLoading || employeesLoading) {

@@ -155,7 +155,7 @@ export const EmployeeDetailsModal: React.FC<EmployeeDetailsModalProps> = ({
                   <p className="text-gray-500 text-center py-4">No tasks assigned</p>
                 ) : (
                   employeeTasks.map(task => (
-                    <div key={task.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                    <div key={task._id} className="bg-white border border-gray-200 rounded-lg p-4">
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="font-medium text-gray-800">{task.title}</h4>
                         <div className="flex space-x-2">
@@ -235,7 +235,7 @@ export const EmployeeDetailsModal: React.FC<EmployeeDetailsModalProps> = ({
                   <p className="text-gray-500 text-center py-4">No updates posted</p>
                 ) : (
                   employeeUpdates.map(update => (
-                    <div key={update.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                    <div key={update._id} className="bg-white border border-gray-200 rounded-lg p-4">
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="font-medium text-gray-800 text-sm">{update.task_title}</h4>
                         <span className="text-xs text-gray-500">{formatDateTime(update.created_at)}</span>
