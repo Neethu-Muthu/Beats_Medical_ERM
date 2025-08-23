@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const employeeSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -15,4 +15,4 @@ const employeeSchema = new mongoose.Schema({
   updated_at: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Employee", employeeSchema);
+export default mongoose.model("Employee", employeeSchema);

@@ -4,6 +4,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import taskRoutes from "./routes/taskRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
+import leadRoutes from "./routes/leadRoutes.js";
+import customerRoutes from "./routes/customerRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 
 dotenv.config();
 
@@ -12,6 +15,9 @@ app.use(cors());
 app.use(express.json());
 app.use("/tasks", taskRoutes);
 app.use("/employees", employeeRoutes);
+app.use("/leads", leadRoutes);
+app.use("/customers", customerRoutes);
+app.use("/notifications", notificationRoutes);
 
 // MongoDB Connection
 mongoose
@@ -62,3 +68,4 @@ app.get("/login-history", async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+

@@ -1,5 +1,5 @@
-const express = require("express");
-const Task = require("../models/Task.js");
+import express from "express";
+import Task from "../models/Task.js";
 
 const router = express.Router();
 
@@ -47,4 +47,17 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+// Get tasks assigned to a specific user
+router.get("/assigned/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const tasks = await Task.find({ assigned_to: userId }).sort({
+      due_date: 1,
+    });
+    res.json({ success: true, tasks });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+export default router;

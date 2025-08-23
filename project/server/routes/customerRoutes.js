@@ -1,50 +1,51 @@
 import express from "express";
-import Employee from "../models/Employee.js";
+import Customer from "../models/Customer.js";
 
 const router = express.Router();
 
-// Get all employees
+// Get all customers
 router.get("/", async (req, res) => {
   try {
-    const employees = await Employee.find().sort({ name: 1 });
-    res.json({ success: true, employees });
+    const customers = await Customer.find();
+    res.json({ success: true, customers });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
-// Add new employee
+// Add new customer
 router.post("/", async (req, res) => {
   try {
-    const employee = await Employee.create(req.body);
-    res.json({ success: true, employee });
+    const customer = await Customer.create(req.body);
+    res.json({ success: true, customer });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
-// Update employee
+// Update customer
 router.put("/:id", async (req, res) => {
   try {
-    const employee = await Employee.findByIdAndUpdate(
+    const customer = await Customer.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updated_at: new Date() },
       { new: true }
     );
-    res.json({ success: true, employee });
+    res.json({ success: true, customer });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
-// Delete employee
+// Delete customer
 router.delete("/:id", async (req, res) => {
   try {
-    await Employee.findByIdAndDelete(req.params.id);
+    await Customer.findByIdAndDelete(req.params.id);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
+// ✅ ES module export
 export default router;
