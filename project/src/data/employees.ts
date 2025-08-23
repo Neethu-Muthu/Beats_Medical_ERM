@@ -1,0 +1,139 @@
+import { User } from '../types';
+
+export const employees: User[] = [
+  {
+    id: '1',
+    name: 'MUHAMMAD RAFEEK KABEER',
+    mobile: '565225438',
+    role: 'CEO',
+    department: 'Executive',
+    designation: 'CEO',
+    member_id: 'BM16001'
+  },
+  {
+    id: '2',
+    name: 'JASSAR MUHAMMAD',
+    mobile: '565225437',
+    role: 'Director',
+    department: 'Management',
+    designation: 'DIRECTOR',
+    member_id: 'BM16002'
+  },
+  {
+    id: '3',
+    name: 'SANAL NANDHANAN',
+    mobile: '504108485',
+    role: 'Employee',
+    department: 'Sales',
+    designation: 'SALES ENGINEER',
+    member_id: 'BM22003'
+  },
+  {
+    id: '4',
+    name: 'VARUN MATHEW',
+    mobile: '523648520',
+    role: 'Employee',
+    department: 'Finance',
+    designation: 'FINANCE MANAGER',
+    member_id: 'BM23004'
+  },
+  {
+    id: '5',
+    name: 'HUDHA T P',
+    mobile: '565154899',
+    role: 'Employee',
+    department: 'Operations',
+    designation: 'OPERATIONAL ASSISTANT',
+    member_id: 'BM23005'
+  },
+  {
+    id: '6',
+    name: 'ABHISHEK A V',
+    mobile: '502241339',
+    role: 'Employee',
+    department: 'Service',
+    designation: 'SERVICE ENGINEER',
+    member_id: 'BM24006'
+  },
+  {
+    id: '7',
+    name: 'IMRAN NARU',
+    mobile: '503440381',
+    role: 'Employee',
+    department: 'Logistics',
+    designation: 'LOGISTICS',
+    member_id: 'BM24007'
+  },
+  {
+    id: '8',
+    name: 'HAFIS HAREESMON',
+    mobile: '567543715',
+    role: 'Employee',
+    department: 'Logistics',
+    designation: 'LOGISTICS',
+    member_id: 'BM24008'
+  },
+  {
+    id: '9',
+    name: 'BADUSHA RAHMAN',
+    mobile: '565211094',
+    role: 'Employee',
+    department: 'Sales and Marketing',
+    designation: 'SALES AND MARKETING',
+    member_id: 'BM25009'
+  },
+  {
+    id: '10',
+    name: 'AKSHAY DAS A',
+    mobile: '565154900',
+    role: 'Employee',
+    department: 'Sales',
+    designation: 'SALES ENGINEER',
+    member_id: 'BM25010'
+  },
+  {
+    id: '11',
+    name: 'SHABU MUHAMMAD',
+    mobile: '565211736',
+    role: 'Employee',
+    department: 'Sales and Marketing',
+    designation: 'SALES AND MARKETING',
+    member_id: 'BM25011'
+  },
+  {
+    id: '12',
+    name: 'SULTHANA RASHEED',
+    mobile: '503440384',
+    role: 'Employee',
+    department: 'Operations',
+    designation: 'OPERATIONAL ASSISTANT',
+    member_id: 'BM25012'
+  },
+  {
+    id: '13',
+    name: 'BRAVIN RAJAGOPAL',
+    mobile: '504108485',
+    role: 'Employee',
+    department: 'Service',
+    designation: 'SERVICE ENGINEER',
+    member_id: 'BM25013'
+  },
+  {
+    id: '14',
+    name: 'BALU VIVEKANANDHAN',
+    mobile: '502241557',
+    role: 'Employee',
+    department: 'Operations',
+    designation: 'OPERATION TEAM LEAD',
+    member_id: 'BM25014'
+  },
+  {
+    id: '15',
+    name: 'CHETAN NAYAK',
+    mobile: '565211804',
+    role: 'Employee',
+    department: 'Sales',
+    designation: 'SALES ENGINEER',
+    member_id: 'BM25015'
+  }
+];
