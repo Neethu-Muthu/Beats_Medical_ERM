@@ -8,11 +8,12 @@ interface WeeklyTasksProps {
   tasks: Task[];
   currentUser: User;
   employees: User[];
-  onAddTask: (taskData: Omit<Task, 'id' | 'createdAt'>) => void;
+  onAddTask: (taskData: Omit<Task, '_id' | 'created_at' | 'updated_at'>) => void;
   onUpdateTask: (taskId: string, updates: Partial<Task>) => void;
   onDeleteTask: (taskId: string) => void;
   onAddTaskUpdate: (taskId: string, message: string) => void;
 }
+
 
 export const WeeklyTasks: React.FC<WeeklyTasksProps> = ({
   tasks,
@@ -61,9 +62,10 @@ export const WeeklyTasks: React.FC<WeeklyTasksProps> = ({
     setIsModalOpen(true);
   };
 
-  const handleSaveTask = (taskData: Omit<Task, 'id' | 'createdAt'>) => {
-    if (editingTask) {
-      onUpdateTask(editingTask.id, {
+  const handleSaveTask = (taskData: Omit<Task, '_id' | 'created_at' | 'updated_at'>) => {
+  if (editingTask) {
+    onUpdateTask(editingTask._id, {
+
         title: taskData.title,
         description: taskData.description,
         assigned_to: taskData.assigned_to,
@@ -72,19 +74,20 @@ export const WeeklyTasks: React.FC<WeeklyTasksProps> = ({
         status: taskData.status
       });
     } else {
-      onAddTask({
-        title: taskData.title,
-        description: taskData.description,
-        assigned_to: taskData.assigned_to,
-        assigned_by: currentUser.id,
-        due_date: taskData.due_date,
-        priority: taskData.priority,
-        status: taskData.status,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      });
+     onAddTask({
+  title: taskData.title,
+  description: taskData.description,
+  assigned_to: taskData.assigned_to,
+  assigned_by: currentUser.id,
+  due_date: taskData.due_date,
+  priority: taskData.priority,
+  status: taskData.status
+});
+
     }
   };
+
+
 
   const getDateRangeLabel = () => {
     const startDate = dates[0];
@@ -145,7 +148,7 @@ export const WeeklyTasks: React.FC<WeeklyTasksProps> = ({
                 <div className="space-y-3">
                   {dayTasks.map(task => (
                     <TaskCard
-                      key={task.id}
+                      key={task._id}
                       task={task}
                       currentUser={currentUser}
                       employees={employees}

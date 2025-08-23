@@ -98,7 +98,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    onDelete(task.id);
+                    onDelete(task._id);
                   }}
                   className="text-gray-400 hover:text-red-600 transition-colors p-1"
                 >
@@ -142,7 +142,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 </div>
                 <div className="space-y-2 max-h-32 overflow-y-auto">
                   {task.updates.slice(-3).map((update) => (
-                    <div key={update.id} className="bg-gray-50 p-2 rounded text-xs">
+                    <div key={update._id} className="bg-gray-50 p-2 rounded text-xs">
                       <div className="flex items-center justify-between mb-1">
                         <span className="font-medium text-gray-700">{update.user_name}</span>
                         <span className="text-gray-400">{getTimeAgo(update.created_at)}</span>
@@ -170,7 +170,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    onStatusUpdate(task.id, { status: 'in-progress' });
+                    onStatusUpdate(task._id, { status: 'in-progress' });
                   }}
                   disabled={task.status === 'in-progress'}
                   className="flex-1 px-2 py-1 text-xs bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors disabled:opacity-50"
@@ -180,7 +180,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    onStatusUpdate(task.id, { status: 'completed' });
+                    onStatusUpdate(task._id, { status: 'completed' });
                   }}
                   className="flex-1 px-2 py-1 text-xs bg-green-50 text-green-700 rounded hover:bg-green-100 transition-colors"
                 >
@@ -196,7 +196,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
         isOpen={isUpdateModalOpen}
         onClose={() => setIsUpdateModalOpen(false)}
         onSave={(message) => {
-          onAddUpdate(task.id, message);
+          onAddUpdate(task._id, message);
           setIsUpdateModalOpen(false);
         }}
       />

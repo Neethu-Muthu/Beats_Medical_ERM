@@ -5,7 +5,7 @@ import { Task, User as UserType } from '../types';
 interface TaskModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (taskData: Omit<Task, 'id' | 'created_at' | 'updated_at'>) => void;
+  onSave: (taskData: Omit<Task, '_id' | 'created_at' | 'updated_at'>) => void;
   currentUser: UserType;
   employees: UserType[];
   selectedDate?: string;
@@ -21,15 +21,26 @@ export const TaskModal: React.FC<TaskModalProps> = ({
   selectedDate,
   editTask
 }) => {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    assigned_to: currentUser.id,
-    assigned_by: currentUser.id,
-    due_date: selectedDate || new Date().toISOString().split('T')[0],
-    priority: 'medium' as 'low' | 'medium' | 'high',
-    status: 'pending' as 'pending' | 'in-progress' | 'completed'
-  });
+  // const [formData, setFormData] = useState({
+  //   title: '',
+  //   description: '',
+  //   assigned_to: currentUser.id,
+  //   assigned_by: currentUser.id,
+  //   due_date: selectedDate || new Date().toISOString().split('T')[0],
+  //   priority: 'medium' as 'low' | 'medium' | 'high',
+  //   status: 'pending' as 'pending' | 'in-progress' | 'completed'
+  // });
+  const [formData, setFormData] = useState<Omit<Task, '_id' | 'created_at' | 'updated_at'>>({
+  title: '',
+  description: '',
+  assigned_to: currentUser.id,
+  assigned_by: currentUser.id,
+  due_date: selectedDate || new Date().toISOString().split('T')[0],
+  priority: 'medium',
+  status: 'pending',
+  updates: [] // optional but should match Task type
+});
+
 
   const canAssignToOthers = currentUser.role === 'CEO' || currentUser.role === 'Director';
 
@@ -42,7 +53,8 @@ export const TaskModal: React.FC<TaskModalProps> = ({
         assigned_by: editTask.assigned_by,
         due_date: editTask.due_date,
         priority: editTask.priority,
-        status: editTask.status
+        status: editTask.status,
+        updates: editTask.updates || []
       });
     } else {
       setFormData({
